@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  pipeline:
+    build: .
+    container_name: olist_pipeline
+    volumes:
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+
+  airflow:
+    image: apache/airflow:2.6.0
+    container_name: olist_airflow
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+    command: airflow standalone
